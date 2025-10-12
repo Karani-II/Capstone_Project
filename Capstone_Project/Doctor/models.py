@@ -4,14 +4,14 @@ from Patient.models import Patient_Profile
 class Doctor_Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     Speciality = models.CharField(max_length = 200)
-    availabiity_schedule = models.TextField(blank = True, null = True)
+    availability_schedule = models.TextField(blank = True, null = True)
 class Appointments(models.Model):
     doctor = models.ForeignKey(Doctor_Profile, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient_Profile, on_delete=models.CASCADE)
     day = models.DateField()    
     time = models.TimeField()
 class Drugs(models.Model):
-    generic_name = models.TextField(max_length = 200)
+    generic_name = models.TextField()
     strength = models.CharField(max_length = 100)
     dosage_form = models.CharField(max_length = 100)
 class Prescription(models.Model):
@@ -31,7 +31,7 @@ class Prescription_Item(models.Model):
     frequency = models.CharField(max_length = 100)
     duration = models.CharField(max_length = 100)
     instructions = models.TextField()
-class PatientNotes():
+class PatientNotes(models.Model):
     patient = models.ForeignKey (Patient_Profile, on_delete = models.CASCADE)
     Doctor = models.ForeignKey(Doctor_Profile, on_delete=models.CASCADE)
     patient_History = models.TextField()

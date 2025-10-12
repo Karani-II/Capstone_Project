@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Doctor',
     'Pharmacist',
     'Patient',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

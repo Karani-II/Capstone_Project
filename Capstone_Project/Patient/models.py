@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 class Patient_Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     Date_of_birth = models.DateField()
+    contact = models.IntegerField()
     weight = models.FloatField() 
     height = models.FloatField()
     BP_diastolic = models.IntegerField()
