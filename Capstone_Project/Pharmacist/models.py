@@ -64,7 +64,6 @@ class Refill_appointment(models.Model):
     refilling_patient = models.ForeignKey(Patient_Profile)
     refilling_date = models.DateTimeField()
 
-class 
 
 
 
