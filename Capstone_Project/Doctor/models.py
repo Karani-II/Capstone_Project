@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User 
 from Patient.models import Patient_Profile 
+from Pharmacist.models import Pharmacist_Profile ,Drugs 
 class Doctor_Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     Speciality = models.CharField(max_length = 200)
@@ -10,20 +11,18 @@ class Appointments(models.Model):
     patient = models.ForeignKey(Patient_Profile, on_delete=models.CASCADE)
     day = models.DateField()    
     time = models.TimeField()
-class Drugs(models.Model):
-    generic_name = models.TextField()
-    strength = models.CharField(max_length = 100)
-    dosage_form = models.CharField(max_length = 100)
 class Prescription(models.Model):
     doctor = models.ForeignKey(Doctor_Profile, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient_Profile, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=[
         ('active', 'Active'),
         ('amended', 'Amended'),
         ('dispensed', 'Dispensed'),
         ('cancelled', 'Cancelled'),
     ], default='active')
+    instructions =  models.TextField()
 class Prescription_Item(models.Model):
     prescription = models.ForeignKey(Prescription,related_name='items' ,on_delete=models.CASCADE)
     drug = models.ForeignKey(Drugs, on_delete=models.CASCADE)
@@ -31,6 +30,10 @@ class Prescription_Item(models.Model):
     frequency = models.CharField(max_length = 100)
     duration = models.CharField(max_length = 100)
     instructions = models.TextField()
+    last_modified_by = models.ForeignKey(
+        Pharmacist_Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_items'
+    )
+    last_modified_at = models.DateTimeField(auto_now=True)
 class PatientNotes(models.Model):
     patient = models.ForeignKey (Patient_Profile, on_delete = models.CASCADE)
     Doctor = models.ForeignKey(Doctor_Profile, on_delete=models.CASCADE)
