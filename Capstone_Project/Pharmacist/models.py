@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User 
 from django.utils import timezone
-from Doctor.models  import Prescription, Prescription_Item ,Drugs
 from Patient.models import Patient_Profile 
+from django.apps import apps
+
 
 class Pharmacist_Profile(models.Model):
     user = models.OneToOneField(User , on_delete = models.CASCADE)
@@ -16,15 +17,15 @@ class prescription_handling(models.Model):
         ('deleted', 'Deleted Item'),
         ('dispensed', 'Dispensed Prescription'),
     ]
-    prescription = models.ForeignKey(Prescription ,on_delete = models.CASCADE)
+    prescription = models.ForeignKey('Doctor.Prescription' ,on_delete = models.CASCADE)
     pharmacist = models.ForeignKey(Pharmacist_Profile , on_delete = models.CASCADE)
-    item = models.ForeignKey(Prescription_Item ,on_delete = models.SET_NULL, null = True, blank = True)
+    item = models.ForeignKey('Doctor.Prescription_Item' ,on_delete = models.SET_NULL, null = True, blank = True)
     action = models.CharField(max_length = 20 , choices = ACTION_CHOICES)
-    timestamp = models.DateTimeField(auto_add_now = True)
+    timestamp = models.DateTimeField(auto_now_add = True)
     notes = models.TextField(blank = True )
 class InventoryItem(models.Model):
     pharmacist = models.ForeignKey(Pharmacist_Profile, on_delete=models.CASCADE, related_name='inventory')
-    drug = models.ForeignKey(Drugs, on_delete=models.CASCADE)
+    drug = models.ForeignKey('Pharmacist.Drugs', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     last_restocked = models.DateTimeField(null=True, blank=True)
@@ -60,8 +61,8 @@ class DrugBatch(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Refill_appointment(models.Model):
-    drug_refill = models.ForeignKey(Drugs)
-    refilling_patient = models.ForeignKey(Patient_Profile)
+    drug_refill = models.ForeignKey(Drugs , on_delete=models.SET_NULL, null=True, blank=True)
+    refilling_patient = models.ForeignKey(Patient_Profile, on_delete=models.SET_NULL, null=True , blank=True )
     refilling_date = models.DateTimeField()
 
 

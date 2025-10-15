@@ -15,7 +15,7 @@ class Prescription(models.Model):
     doctor = models.ForeignKey(Doctor_Profile, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient_Profile, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True,)
     status = models.CharField(max_length=20, choices=[
         ('active', 'Active'),
         ('amended', 'Amended'),
