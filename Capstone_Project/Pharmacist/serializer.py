@@ -24,7 +24,7 @@ class InventoryItemSerializer(serializers.Serializer):
         model = InventoryItem
         fields = ['id', 'pharmacist', 'drug', 'drug_id', 'quantity', 'unit_price', 'last_restocked', 'expiry_date']
 
-class DrugBatchSerializer(serializers.Seraializer):
+class DrugBatchSerializer(serializers.Serializer):
     class Meta:
         model = DrugBatch 
         fields = '__all__'

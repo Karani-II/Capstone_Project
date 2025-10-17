@@ -2,8 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets ,status 
 from rest_framework.response import Response 
 from rest_framework.permissions  import IsAuthenticated 
-from serializer import Pharmacist_ProfileSerializer , prescription_handlingSerializer ,DrugsSerializer, InventoryItemSerializer,DrugBatchSerializer , Refill_appointmentSerializer
-from rest_framework import permissions
+from .serializer import Pharmacist_ProfileSerializer , prescription_handlingSerializer ,DrugsSerializer, InventoryItemSerializer,DrugBatchSerializer , Refill_appointmentSerializer
 from .models import Pharmacist_Profile, prescription_handling, Drugs , InventoryItem , DrugBatch , Refill_appointment  
 
 class Pharmacist_Profileview(viewsets.ModelViewSet):
@@ -16,12 +15,12 @@ class prescription_handlingview(viewsets.ModelViewSet):
     serializer_class = prescription_handlingSerializer
     permission_classes = [IsAuthenticated]
 
-class Drugsview(viewsets.ModelViewSets):
+class Drugsview(viewsets.ModelViewSet):
     queryset = Drugs.objects.all()
     serializer_class = DrugsSerializer 
     permission_classes = [IsAuthenticated]
 
-class InventoryItemview(viewsets.modelViewSet):
+class InventoryItemview(viewsets.ModelViewSet):
     queryset = InventoryItem.objects.all()
     serializer_class = InventoryItemSerializer 
     permission_classes = [IsAuthenticated]

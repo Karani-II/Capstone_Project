@@ -13,6 +13,5 @@ router.register(r'batches', DrugBatchview)
 router.register(r'prescription-handling', prescription_handlingview)
 router.register(r'refill-appointments', Refill_appointmentview)
 
-urlpatterns = [
-    path('api/', include(router.urls)),
-]
+urlpatterns = router.urls
+
