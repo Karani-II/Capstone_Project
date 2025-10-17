@@ -1,3 +1,58 @@
 from django.shortcuts import render
+from rest_framework import viewsets ,status 
+from rest_framework.response import Response 
+from rest_framework.permissions  import IsAuthenticated 
+from serializer import Pharmacist_ProfileSerializer , prescription_handlingSerializer ,DrugsSerializer, InventoryItemSerializer,DrugBatchSerializer , Refill_appointmentSerializer
+from rest_framework import permissions
+from .models import Pharmacist_Profile, prescription_handling, Drugs , InventoryItem , DrugBatch , Refill_appointment  
 
-# Create your views here.
+class Pharmacist_Profileview(viewsets.ModelViewSet):
+    serializer_class = Pharmacist_ProfileSerializer 
+    queryset = Pharmacist_Profile.objects.all()
+    permission_classes = [IsAuthenticated]
+
+class prescription_handlingview(viewsets.ModelViewSet):
+    queryset = prescription_handling.objects.all()
+    serializer_class = prescription_handlingSerializer
+    permission_classes = [IsAuthenticated]
+
+class Drugsview(viewsets.ModelViewSets):
+    queryset = Drugs.objects.all()
+    serializer_class = DrugsSerializer 
+    permission_classes = [IsAuthenticated]
+
+class InventoryItemview(viewsets.modelViewSet):
+    queryset = InventoryItem.objects.all()
+    serializer_class = InventoryItemSerializer 
+    permission_classes = [IsAuthenticated]
+    def restock(self, request, pk=None):
+        item = self.get_object()
+        amount = int(request.data.get('amount', 0))
+        item.restock(amount)
+        return Response({'message': 'Item restocked successfully'}, status=status.HTTP_200_OK)
+
+class DrugBatchview(viewsets.ModelViewSet):
+    queryset = DrugBatch.objects.all()
+    serializer_Class = DrugBatchSerializer 
+    permission_classes = [IsAuthenticated]
+
+class Refill_appointmentview(viewsets.ModelViewSet):
+    queryset = Refill_appointment.objects.all()
+    serializer_class = Refill_appointmentSerializer 
+    permission_classes = [IsAuthenticated]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Create your views here.
