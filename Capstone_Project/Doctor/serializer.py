@@ -10,7 +10,7 @@ class Doctor_ProfileSerializer(serializers.ModelSerializer):
 class AppointmentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointments 
-        fiels = '__all__'
+        fields = '__all__'
 
 class PrescriptionSerializer(serializers.ModelSerializer):
     class Meta:

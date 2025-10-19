@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 class Patient_Profileview(viewsets.ModelViewSet):
     queryset = Patient_Profile.objects.all()
     serializer_class = Patient_ProfileSerializer 
-    permission_classes = IsAuthenticated 
+    permission_classes = [IsAuthenticated]
     
 
 

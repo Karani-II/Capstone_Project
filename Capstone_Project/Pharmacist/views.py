@@ -33,7 +33,7 @@ class InventoryItemview(viewsets.ModelViewSet):
 
 class DrugBatchview(viewsets.ModelViewSet):
     queryset = DrugBatch.objects.all()
-    serializer_Class = DrugBatchSerializer 
+    serializer_class = DrugBatchSerializer 
     permission_classes = [IsAuthenticated]
 
 class Refill_appointmentview(viewsets.ModelViewSet):

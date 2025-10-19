@@ -62,6 +62,9 @@ class DrugBatch(models.Model):
 
 class Refill_appointment(models.Model):
     drug_refill = models.ForeignKey(Drugs , on_delete=models.SET_NULL, null=True, blank=True)
+    dosage = models.CharField(default = "null")
+    frequency = models.CharField(default = "null")
+    duration = models.CharField(default = "null")
     refilling_patient = models.ForeignKey(Patient_Profile, on_delete=models.SET_NULL, null=True , blank=True )
     refilling_date = models.DateTimeField()
 
