@@ -1,10 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets ,status 
 from rest_framework.response import Response 
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .services import get_rxcui ,check_drug_interactions
-
 from rest_framework.permissions  import IsAuthenticated 
 from .serializer import Pharmacist_ProfileSerializer , prescription_handlingSerializer ,DrugsSerializer, InventoryItemSerializer,DrugBatchSerializer , Refill_appointmentSerializer
 from .models import Pharmacist_Profile, prescription_handling, Drugs , InventoryItem , DrugBatch , Refill_appointment  
@@ -44,24 +41,6 @@ class Refill_appointmentview(viewsets.ModelViewSet):
     serializer_class = Refill_appointmentSerializer 
     permission_classes = [IsAuthenticated]
 
-
-@api_view(['POST'])
-def drug_interaction_check(request):
-    drug_names = request.data.get('drugs', [])
-
-    if len(drug_names) < 2:
-        return Response({"error": "Please provide at least two drug names"}, status=400)
-
-    rxcuis = []
-    for name in drug_names:
-        rxcui = get_rxcui(name)
-        if rxcui:
-            rxcuis.append(rxcui)
-        else:
-            return Response({"error": f"Could not find RxCUI for {name}"}, status=404)
-
-    interactions = check_drug_interactions(rxcuis)
-    return Response(interactions)
 
 
 

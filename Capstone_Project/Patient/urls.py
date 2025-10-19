@@ -1,7 +1,7 @@
 from rest_framework.routers import DefaultRouter 
-from .models import Patient_Profile 
+from .views import Patient_Profileview
 
 router = DefaultRouter()
-router.register(r'Patient' , Patient_Profile)
+router.register(r'Patient' , Patient_Profileview)
 
 urlpatterns = router.urls 
